@@ -27,6 +27,8 @@ def index():
 	return render_template("index.html", title='Home', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
+#test login: user=moses
+#			 password=test
 def login():
 	#prevents a logged in user from reaching the login page again
 	if current_user.is_authenticated:
@@ -34,7 +36,7 @@ def login():
 	form = LoginForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(username=form.username.data).first()
-		if user is None or not user.check_password(form.username.data):
+		if user is None or not user.check_password(form.password.data):
 			flash('Invalid username or password')
 			return redirect(url_for('login'))
 		login_user(user, remember=form.remember_me.data)
